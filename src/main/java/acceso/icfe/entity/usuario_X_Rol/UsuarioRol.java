@@ -2,33 +2,32 @@ package acceso.icfe.entity.usuario_X_Rol;
 
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuarios_roles")
+@Table(name = "usuarios_roles", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"usuario_id", "rol_id"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UsuarioRol {
 
-    @EmbeddedId
-    private UsuarioRolId id = new UsuarioRolId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("usuarioId")
-    @JoinColumn(name = "usuario_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("rolId")
-    @JoinColumn(name = "rol_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 
     @Column(name = "fecha_asignacion", nullable = false)
