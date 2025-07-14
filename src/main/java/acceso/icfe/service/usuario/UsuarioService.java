@@ -1,7 +1,9 @@
 package acceso.icfe.service.usuario;
 
-import org.springframework.stereotype.Service;
+import acceso.icfe.DTO.UsuarioRequestDTO;
+import acceso.icfe.entity.usuario.Usuario;
 
-@Service
-public class UsuarioService {
+public interface UsuarioService {
+
+    Usuario crearUsuario(UsuarioRequestDTO dto);
 }
