@@ -3,7 +3,7 @@ package acceso.icfe.entity.registroAcceso;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.entity.vehiculo.Vehiculo;
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter

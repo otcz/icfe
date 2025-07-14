@@ -8,4 +8,5 @@ public record UsuarioRequestDTO(
         String casa,
         String nombreUsuario,
         String contrasena
-) {}
+) {
+}

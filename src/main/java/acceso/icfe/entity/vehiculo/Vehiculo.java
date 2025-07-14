@@ -1,11 +1,10 @@
 package acceso.icfe.entity.vehiculo;
 
-
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.utils.EstadoVehiculo;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
 @Getter
 @Setter

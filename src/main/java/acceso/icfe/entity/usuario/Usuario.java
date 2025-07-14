@@ -3,8 +3,9 @@ package acceso.icfe.entity.usuario;
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario_X_Rol.UsuarioRol;
 import acceso.icfe.utils.EstadoUsuario;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.*;
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,5 +49,7 @@ public class Usuario {
 
     // Relación uno a muchos con UsuarioRol
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<UsuarioRol> rolesAsignados = new HashSet<>();
+
 }
