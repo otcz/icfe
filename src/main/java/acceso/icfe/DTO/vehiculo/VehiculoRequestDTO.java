@@ -1,4 +1,4 @@
-package acceso.icfe.DTO;
+package acceso.icfe.DTO.vehiculo;
 
 
 import acceso.icfe.utils.EstadoVehiculo;

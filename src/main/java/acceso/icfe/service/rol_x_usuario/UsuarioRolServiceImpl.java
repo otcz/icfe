@@ -1,12 +1,12 @@
 package acceso.icfe.service.rol_x_usuario;
 
 
-import acceso.icfe.DTO.UsuarioRolRequestDTO;
+import acceso.icfe.DTO.usuario.UsuarioRolRequestDTO;
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
-import acceso.icfe.entity.usuario_X_Rol.UsuarioRol;
+import acceso.icfe.entity.usuario.UsuarioRol;
 import acceso.icfe.repository.rol.RolRepository;
-import acceso.icfe.repository.rol_x_usuario.UsuarioRolRepository;
+import acceso.icfe.repository.usuario.UsuarioRolRepository;
 import acceso.icfe.repository.usuario.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

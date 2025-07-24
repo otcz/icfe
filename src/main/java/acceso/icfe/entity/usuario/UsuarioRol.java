@@ -1,4 +1,4 @@
-package acceso.icfe.entity.usuario_X_Rol;
+package acceso.icfe.entity.usuario;
 
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
@@ -30,7 +30,6 @@ public class UsuarioRol {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "rol_id", nullable = false)
-    @JsonIgnore // Evita serializar el rol completo
     private Rol rol;
 
 

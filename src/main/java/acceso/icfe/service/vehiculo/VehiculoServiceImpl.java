@@ -1,6 +1,7 @@
 package acceso.icfe.service.vehiculo;
 
-import acceso.icfe.DTO.VehiculoRequestDTO;
+import acceso.icfe.DTO.vehiculo.VehiculoRequestDTO;
+import acceso.icfe.DTO.vehiculo.VehiculoResponseDTO;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.entity.vehiculo.Vehiculo;
 import acceso.icfe.repository.usuario.UsuarioRepository;
@@ -16,7 +17,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public Vehiculo registrarVehiculo(VehiculoRequestDTO dto) {
+    public VehiculoResponseDTO registrarVehiculo(VehiculoRequestDTO dto) {
         Usuario propietario = usuarioRepository.findById(dto.propietarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -26,6 +27,13 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculo.setMarca(dto.marca());
         vehiculo.setEstado(dto.estado());
 
-        return vehiculoRepository.save(vehiculo);
+        Vehiculo vehiculoSave= vehiculoRepository.save(vehiculo);
+        return new VehiculoResponseDTO(
+                vehiculoSave.getId(),
+                vehiculoSave.getTipo(),
+                vehiculoSave.getMarca(),
+                vehiculoSave.getEstado().name(),
+                propietario.getNombres() + " " + propietario.getApellidos()
+        );
     }
 }

@@ -1,8 +1,8 @@
-package acceso.icfe.repository.rol_x_usuario;
+package acceso.icfe.repository.usuario;
 
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
-import acceso.icfe.entity.usuario_X_Rol.UsuarioRol;
+import acceso.icfe.entity.usuario.UsuarioRol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

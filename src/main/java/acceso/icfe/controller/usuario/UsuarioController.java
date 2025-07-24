@@ -1,12 +1,9 @@
 package acceso.icfe.controller.usuario;
 
-import acceso.icfe.DTO.RolRequestDTO;
-import acceso.icfe.DTO.UsuarioRequestDTO;
-import acceso.icfe.DTO.UsuarioRolRequestDTO;
-import acceso.icfe.entity.rol.Rol;
+import acceso.icfe.DTO.usuario.UsuarioRequestDTO;
+import acceso.icfe.DTO.usuario.UsuarioRolRequestDTO;
 import acceso.icfe.entity.usuario.Usuario;
-import acceso.icfe.entity.usuario_X_Rol.UsuarioRol;
-import acceso.icfe.service.rol.RolService;
+import acceso.icfe.entity.usuario.UsuarioRol;
 import acceso.icfe.service.rol_x_usuario.UsuarioRolService;
 import acceso.icfe.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +22,16 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    UsuarioRolService usuarioRolService;
     @PostMapping("/crear")
     public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequestDTO dto) {
         return ResponseEntity.ok(usuarioService.crearUsuario(dto));
+    }
+
+    @PostMapping("/asignar-rol")
+    public ResponseEntity<UsuarioRol> asignarRol(@RequestBody UsuarioRolRequestDTO dto) {
+        return ResponseEntity.ok(usuarioRolService.asignarRolAUsuario(dto));
     }
 
 }

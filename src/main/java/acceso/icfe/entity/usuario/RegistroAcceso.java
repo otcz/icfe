@@ -1,4 +1,4 @@
-package acceso.icfe.entity.registroAcceso;
+package acceso.icfe.entity.usuario;
 
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.entity.vehiculo.Vehiculo;

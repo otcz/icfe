@@ -1,4 +1,4 @@
-package acceso.icfe.DTO;
+package acceso.icfe.DTO.usuario;
 
 // UsuarioRequestDTO.java
 public record UsuarioRequestDTO(
