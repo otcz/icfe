@@ -5,6 +5,7 @@ import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.service.rol.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,12 @@ public class RolController {
     RolService rolService;
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<Rol> crearRol(@RequestBody RolRequestDTO dto) {
         return ResponseEntity.ok(rolService.crearRol(dto));
     }
+
 
 
 

@@ -1,6 +1,8 @@
 package acceso.icfe.entity.rol;
 
 import acceso.icfe.audit.AuditableEntity;
+import acceso.icfe.entity.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,8 @@ import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -26,7 +30,11 @@ public class Rol extends AuditableEntity implements Serializable {
     private Long id;
 
     @Column(name = "nombre", nullable = false, unique = true)
-    private String nombre; // Ej: ROL_ADMIN, ROL_GUARDIA, ROL_USUARIO
+    private String nombre;
+
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Usuario> usuarios = new HashSet<>();
+
 
     @Override
     public String toString() {

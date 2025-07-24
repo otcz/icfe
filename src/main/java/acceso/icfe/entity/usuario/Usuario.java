@@ -1,5 +1,6 @@
 package acceso.icfe.entity.usuario;
 
+import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.utils.EstadoUsuario;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 @ToString
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails  {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,18 +53,20 @@ public class Usuario implements UserDetails  {
     @Column(name = "ruta_codigo_qr")
     private String rutaCodigoQr;
 
-    // Relación uno a muchos con UsuarioRol
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private Set<UsuarioRol> rolesAsignados = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rol_id", nullable = false)
+    private Rol rol;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return rolesAsignados.stream()
-                .map(usuarioRol -> new SimpleGrantedAuthority(usuarioRol.getRol().getNombre()))
-                .collect(Collectors.toSet());
+        return rol != null
+                ? List.of(new SimpleGrantedAuthority("ROLE_" + rol.getNombre()))
+                : List.of();
     }
+
+
+
 
     @Override
     public String getPassword() {

@@ -1,7 +1,7 @@
 package acceso.icfe.DTO.usuario;
 
-// UsuarioRolRequestDTO.java
-public record UsuarioRolRequestDTO(
+public record AsignarRolRequestDTO(
         Long usuarioId,
         Long rolId
-) {}
+) {
+}
