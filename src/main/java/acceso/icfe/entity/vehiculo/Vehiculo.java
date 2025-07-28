@@ -1,9 +1,13 @@
 package acceso.icfe.entity.vehiculo;
 
+import acceso.icfe.audit.AuditableEntity;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.utils.EstadoVehiculo;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.io.Serializable;
 
 
 @Getter
@@ -12,8 +16,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
+@EntityListeners({AuditingEntityListener.class})
 @Table(name = "vehiculo")
-public class Vehiculo {
+public class Vehiculo extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +29,12 @@ public class Vehiculo {
     private Usuario propietario;
 
     @Column(name = "tipo", nullable = false)
-    private String tipo; // Ej: Carro, Moto, Bicicleta
+    private String tipo;
 
     @Column(name = "marca", nullable = false)
     private String marca;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoVehiculo estado; // ACTIVO, INACTIVO
+    private EstadoVehiculo estado;
 }

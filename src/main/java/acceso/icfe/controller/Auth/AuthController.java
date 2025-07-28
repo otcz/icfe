@@ -28,16 +28,23 @@ public class AuthController {
             Authentication auth = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.nombreUsuario(), dto.contrasena())
             );
-
             Usuario usuario = (Usuario) auth.getPrincipal();
-            String rol = usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL";
+            if (usuario.getRol() == null) {
+                return ResponseEntity
+                        .status(403)
+                        .body("El usuario no tiene un rol asignado. Comuníquese con el administrador.");
+            }
 
+            String rol = usuario.getRol().getNombre();
             String token = jwtService.generateToken(usuario);
+
             return ResponseEntity.ok(new AuthResponseDTO(token, rol));
+
         } catch (BadCredentialsException e) {
             return ResponseEntity
                     .status(401)
                     .body("Usuario o contraseña inválidos");
         }
     }
+
 }

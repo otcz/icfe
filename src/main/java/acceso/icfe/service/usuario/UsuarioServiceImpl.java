@@ -2,6 +2,7 @@ package acceso.icfe.service.usuario;
 
 import acceso.icfe.DTO.usuario.AsignarRolRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioRequestDTO;
+import acceso.icfe.DTO.usuario.UsuarioResponseDTO;
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.repository.rol.RolRepository;
@@ -31,12 +32,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setTelefono(dto.telefono());
         usuario.setCasa(dto.casa());
         usuario.setNombreUsuario(dto.nombreUsuario());
-        String passwordEncriptada = passwordEncoder.encode(dto.contrasena());
-        usuario.setContrasena(passwordEncriptada);
+
+        // Encriptar la contraseña si usas BCrypt
+        usuario.setContrasena(passwordEncoder.encode(dto.contrasena()));
 
         usuario.setEstado(EstadoUsuario.ACTIVO);
+
+        // No se asigna rol en la creación
+        usuario.setRol(null);
+
         return usuarioRepository.save(usuario);
     }
+
 
     @Override
     public Usuario asignarRol(AsignarRolRequestDTO dto) {
@@ -49,4 +56,21 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setRol(rol);
         return usuarioRepository.save(usuario);
     }
+
+    @Override
+    public UsuarioResponseDTO mapToDto(Usuario usuario) {
+        return new UsuarioResponseDTO(
+                usuario.getId(),
+                usuario.getNombres(),
+                usuario.getApellidos(),
+                usuario.getTelefono(),
+                usuario.getCasa(),
+                usuario.getNombreUsuario(),
+                usuario.getEstado().name(),
+                usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL"
+        );
+    }
+
 }
+
+

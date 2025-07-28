@@ -1,9 +1,13 @@
 package acceso.icfe.entity.usuario;
 
+import acceso.icfe.audit.AuditableEntity;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.entity.vehiculo.Vehiculo;
 import lombok.*;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,8 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @Entity
+@EntityListeners({AuditingEntityListener.class})
 @Table(name = "registro_acceso")
-public class RegistroAcceso {
+public class RegistroAcceso extends AuditableEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -2,6 +2,7 @@ package acceso.icfe.controller.usuario;
 
 import acceso.icfe.DTO.usuario.AsignarRolRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioRequestDTO;
+import acceso.icfe.DTO.usuario.UsuarioResponseDTO;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/asignar-rol")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Usuario> asignarRol(@RequestBody AsignarRolRequestDTO dto) {
-        return ResponseEntity.ok(usuarioService.asignarRol(dto));
+    public ResponseEntity<UsuarioResponseDTO> asignarRol(@RequestBody AsignarRolRequestDTO dto) {
+        Usuario usuario = usuarioService.asignarRol(dto);
+        return ResponseEntity.ok(usuarioService.mapToDto(usuario));
     }
 
 

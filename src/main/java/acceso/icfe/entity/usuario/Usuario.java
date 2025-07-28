@@ -1,14 +1,19 @@
 package acceso.icfe.entity.usuario;
 
+import acceso.icfe.audit.AuditableEntity;
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.utils.EstadoUsuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.domain.Auditable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,8 +27,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ToString
 @Entity
+@EntityListeners({AuditingEntityListener.class})
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario extends AuditableEntity implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +49,7 @@ public class Usuario implements UserDetails {
     @Column(name = "nombre_usuario", unique = true, nullable = false)
     private String nombreUsuario;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String contrasena;
 
@@ -54,7 +61,7 @@ public class Usuario implements UserDetails {
     private String rutaCodigoQr;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rol_id", nullable = false)
+    @JoinColumn(name = "rol_id")
     private Rol rol;
 
 
@@ -64,6 +71,7 @@ public class Usuario implements UserDetails {
                 ? List.of(new SimpleGrantedAuthority("ROLE_" + rol.getNombre()))
                 : List.of();
     }
+
 
 
 
