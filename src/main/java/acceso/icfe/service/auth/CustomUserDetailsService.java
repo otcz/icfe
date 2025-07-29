@@ -1,4 +1,4 @@
-package acceso.icfe.service.Auth;
+package acceso.icfe.service.auth;
 
 import acceso.icfe.repository.usuario.UsuarioRepository;
 import lombok.RequiredArgsConstructor;

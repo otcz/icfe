@@ -3,13 +3,20 @@ package acceso.icfe.service.usuario;
 import acceso.icfe.DTO.usuario.AsignarRolRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioResponseDTO;
+import acceso.icfe.DTO.vehiculo.VehiculoResponseDTO;
 import acceso.icfe.entity.usuario.Usuario;
 
 public interface UsuarioService {
 
-    Usuario crearUsuario(UsuarioRequestDTO dto);
-    Usuario asignarRol(AsignarRolRequestDTO dto);
+    UsuarioResponseDTO crearUsuario(UsuarioRequestDTO dto);
 
-    UsuarioResponseDTO mapToDto(Usuario usuario);
+    UsuarioResponseDTO asignarRol(AsignarRolRequestDTO dto);
+
+    UsuarioResponseDTO asiganarCodigoQr(String codigo, Long idUsuario);
+
+    UsuarioResponseDTO mapToDto(Usuario usuario, VehiculoResponseDTO vehiculo);
+
+    Usuario buscarUserPorCode(String code);
+
 
 }

@@ -6,4 +6,6 @@ import acceso.icfe.entity.vehiculo.Vehiculo;
 
 public interface VehiculoService {
     VehiculoResponseDTO registrarVehiculo(VehiculoRequestDTO dto);
+
+    VehiculoResponseDTO findVehiculoByPropietario(Long id);
 }

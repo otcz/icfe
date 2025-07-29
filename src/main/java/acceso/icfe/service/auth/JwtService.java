@@ -1,4 +1,4 @@
-package acceso.icfe.service.Auth;
+package acceso.icfe.service.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package acceso.icfe.entity.usuario;
+package acceso.icfe.entity.registro_acceso;
 
 import acceso.icfe.audit.AuditableEntity;
 import acceso.icfe.entity.usuario.Usuario;
@@ -32,7 +32,7 @@ public class RegistroAcceso extends AuditableEntity implements Serializable {
     private Vehiculo vehiculo;
 
     @Column(name = "tipo_movimiento", nullable = false)
-    private String tipoMovimiento; // Entrada o Salida
+    private String tipoMovimiento;
 
     @Column(name = "fecha_hora", nullable = false)
     private LocalDateTime fechaHora;

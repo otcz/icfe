@@ -36,4 +36,23 @@ public class VehiculoServiceImpl implements VehiculoService {
                 propietario.getNombres() + " " + propietario.getApellidos()
         );
     }
+
+    @Override
+    public VehiculoResponseDTO findVehiculoByPropietario(Long id) {
+        Vehiculo vehiculo = vehiculoRepository.findByPropietarioId(id)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado para el usuario con ID: " + id));
+
+        String nombrePropietario = vehiculo.getPropietario().getNombres() + " " + vehiculo.getPropietario().getApellidos();
+
+        return new VehiculoResponseDTO(
+                vehiculo.getId(),
+                vehiculo.getTipo(),
+                vehiculo.getMarca(),
+                vehiculo.getEstado().name(),
+                nombrePropietario
+        );
+    }
+
+
+
 }

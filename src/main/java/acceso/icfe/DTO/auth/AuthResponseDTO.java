@@ -1,4 +1,4 @@
-package acceso.icfe.DTO.Auth;
+package acceso.icfe.DTO.auth;
 
 public record AuthResponseDTO(String token, String rol) {
 }

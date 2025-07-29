@@ -1,10 +1,10 @@
-package acceso.icfe.controller.Auth;
+package acceso.icfe.controller.auth;
 
-import acceso.icfe.DTO.Auth.AuthRequestDTO;
-import acceso.icfe.DTO.Auth.AuthResponseDTO;
+import acceso.icfe.DTO.auth.AuthRequestDTO;
+import acceso.icfe.DTO.auth.AuthResponseDTO;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.repository.usuario.UsuarioRepository;
-import acceso.icfe.service.Auth.JwtService;
+import acceso.icfe.service.auth.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

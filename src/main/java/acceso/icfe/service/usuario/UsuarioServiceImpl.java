@@ -3,6 +3,7 @@ package acceso.icfe.service.usuario;
 import acceso.icfe.DTO.usuario.AsignarRolRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioRequestDTO;
 import acceso.icfe.DTO.usuario.UsuarioResponseDTO;
+import acceso.icfe.DTO.vehiculo.VehiculoResponseDTO;
 import acceso.icfe.entity.rol.Rol;
 import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.repository.rol.RolRepository;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public Usuario crearUsuario(UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO crearUsuario(UsuarioRequestDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNombres(dto.nombres());
         usuario.setApellidos(dto.apellidos());
@@ -41,12 +44,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         // No se asigna rol en la creación
         usuario.setRol(null);
 
-        return usuarioRepository.save(usuario);
+        return mapToDto(usuarioRepository.save(usuario));
     }
 
 
     @Override
-    public Usuario asignarRol(AsignarRolRequestDTO dto) {
+    public UsuarioResponseDTO asignarRol(AsignarRolRequestDTO dto) {
         Usuario usuario = usuarioRepository.findById(dto.usuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -54,11 +57,42 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
         usuario.setRol(rol);
-        return usuarioRepository.save(usuario);
+        return mapToDto(usuarioRepository.save(usuario));
     }
 
     @Override
-    public UsuarioResponseDTO mapToDto(Usuario usuario) {
+    public UsuarioResponseDTO asiganarCodigoQr(String code, Long idUsuario) {
+        if (code == null || code.trim().isEmpty()) {
+            throw new IllegalArgumentException("El código QR no puede estar vacío.");
+        }
+
+        // Verificar si ya está en uso por otro usuario
+        usuarioRepository.findUsuarioByRutaCodigoQr(code).ifPresent(usuarioExistente -> {
+            throw new RuntimeException("El código QR ya está asignado a otro usuario.");
+        });
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + idUsuario));
+
+        usuario.setRutaCodigoQr(code);
+        return mapToDto(usuarioRepository.save(usuario));
+    }
+
+    @Override
+    public Usuario buscarUserPorCode(String code) {
+        if (code == null || code.trim().isEmpty()) {
+            throw new IllegalArgumentException("El código QR no puede estar vacío.");
+        }
+        Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByRutaCodigoQr(code);
+
+        if (optionalUsuario.isPresent()) {
+            return ((optionalUsuario.get()));
+        } else {
+            throw new RuntimeException("No se encontró un usuario con el código QR proporcionado.");
+        }
+    }
+
+    public UsuarioResponseDTO mapToDto(Usuario usuario, VehiculoResponseDTO vehiculo) {
         return new UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getNombres(),
@@ -67,9 +101,33 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.getCasa(),
                 usuario.getNombreUsuario(),
                 usuario.getEstado().name(),
-                usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL"
+                usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL",
+                vehiculo
         );
     }
+
+
+    public UsuarioResponseDTO mapToDto(Usuario usuario) {
+        return mapToDto(usuario, null);
+    }
+
+    public Usuario mapToEntity(UsuarioResponseDTO dto) {
+        Usuario usuario = new Usuario();
+        usuario.setId(dto.id());
+        usuario.setNombres(dto.nombres());
+        usuario.setApellidos(dto.apellidos());
+        usuario.setTelefono(dto.telefono());
+        usuario.setCasa(dto.casa());
+        usuario.setNombreUsuario(dto.nombreUsuario());
+        usuario.setEstado(EstadoUsuario.valueOf(dto.estado()));
+        return usuario;
+    }
+
+
+
+
+
+
 
 }
 

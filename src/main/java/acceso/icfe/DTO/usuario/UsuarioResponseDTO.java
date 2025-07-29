@@ -1,5 +1,7 @@
 package acceso.icfe.DTO.usuario;
 
+import acceso.icfe.DTO.vehiculo.VehiculoResponseDTO;
+
 public record UsuarioResponseDTO(
         Long id,
         String nombres,
@@ -8,6 +10,7 @@ public record UsuarioResponseDTO(
         String casa,
         String nombreUsuario,
         String estado,
-        String rol
+        String rol,
+        VehiculoResponseDTO vehiculo
 ) {
 }

@@ -1,4 +1,4 @@
-package acceso.icfe.DTO.Auth;
+package acceso.icfe.DTO.auth;
 
 public record AuthRequestDTO(String nombreUsuario, String contrasena) {
 }
