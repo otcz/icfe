@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("api/acceso")
@@ -31,14 +33,13 @@ public class RegistrosAccesoController {
     public ResponseEntity<?> registrarAcceso(@PathVariable String code) {
         try {
             Usuario usuarioEntity = usuarioService.buscarUserPorCode(code); // necesitas este método
-            VehiculoResponseDTO vehiculo = vehiculoService.findVehiculoByPropietario(usuarioEntity.getId());
+            List<VehiculoResponseDTO> vehiculo = vehiculoService.findVehiculosByPropietario(usuarioEntity.getId());
             UsuarioResponseDTO dto = usuarioService.mapToDto(usuarioEntity, vehiculo);
             return ResponseEntity.ok(dto);
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
-
 
 
 }

@@ -2,6 +2,8 @@ package acceso.icfe.DTO.usuario;
 
 import acceso.icfe.DTO.vehiculo.VehiculoResponseDTO;
 
+import java.util.List;
+
 public record UsuarioResponseDTO(
         Long id,
         String nombres,
@@ -11,6 +13,6 @@ public record UsuarioResponseDTO(
         String nombreUsuario,
         String estado,
         String rol,
-        VehiculoResponseDTO vehiculo
+        List <VehiculoResponseDTO> vehiculo
 ) {
 }

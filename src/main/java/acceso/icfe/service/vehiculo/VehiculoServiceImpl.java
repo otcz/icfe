@@ -6,8 +6,13 @@ import acceso.icfe.entity.usuario.Usuario;
 import acceso.icfe.entity.vehiculo.Vehiculo;
 import acceso.icfe.repository.usuario.UsuarioRepository;
 import acceso.icfe.repository.vehiculo.VehiculoRepository;
+import acceso.icfe.utils.EstadoVehiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +32,7 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculo.setMarca(dto.marca());
         vehiculo.setEstado(dto.estado());
 
-        Vehiculo vehiculoSave= vehiculoRepository.save(vehiculo);
+        Vehiculo vehiculoSave = vehiculoRepository.save(vehiculo);
         return new VehiculoResponseDTO(
                 vehiculoSave.getId(),
                 vehiculoSave.getTipo(),
@@ -53,6 +58,25 @@ public class VehiculoServiceImpl implements VehiculoService {
         );
     }
 
+    @Override
+    public List<VehiculoResponseDTO> findVehiculosByPropietario(Long id) {
+        List<Vehiculo> vehiculos = vehiculoRepository.findAllByPropietarioIdAndEstado(id, EstadoVehiculo.ACTIVO);
+        if (vehiculos.isEmpty()) {
+            throw new RuntimeException("Vehículos no encontrados para el usuario con ID: " + id);
+        }
+        return vehiculos.stream()
+                .map(vehiculo -> {
+                    String nombrePropietario = vehiculo.getPropietario().getNombres() + " " + vehiculo.getPropietario().getApellidos();
+                    return new VehiculoResponseDTO(
+                            vehiculo.getId(),
+                            vehiculo.getTipo(),
+                            vehiculo.getMarca(),
+                            vehiculo.getEstado().name(),
+                            nombrePropietario
+                    );
+                })
+                .collect(Collectors.toList());
+    }
 
 
 }

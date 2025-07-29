@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,6 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return mapToDto(usuarioRepository.save(usuario));
     }
 
+
     @Override
     public Usuario buscarUserPorCode(String code) {
         if (code == null || code.trim().isEmpty()) {
@@ -92,7 +94,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
-    public UsuarioResponseDTO mapToDto(Usuario usuario, VehiculoResponseDTO vehiculo) {
+
+    public UsuarioResponseDTO mapToDto(Usuario usuario, List<VehiculoResponseDTO> vehiculos) {
         return new UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getNombres(),
@@ -102,10 +105,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.getNombreUsuario(),
                 usuario.getEstado().name(),
                 usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL",
-                vehiculo
+                vehiculos
         );
     }
-
 
     public UsuarioResponseDTO mapToDto(Usuario usuario) {
         return mapToDto(usuario, null);
@@ -122,11 +124,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEstado(EstadoUsuario.valueOf(dto.estado()));
         return usuario;
     }
-
-
-
-
-
 
 
 }

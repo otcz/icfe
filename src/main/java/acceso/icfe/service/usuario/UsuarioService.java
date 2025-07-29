@@ -14,8 +14,6 @@ public interface UsuarioService {
 
     UsuarioResponseDTO asiganarCodigoQr(String codigo, Long idUsuario);
 
-    UsuarioResponseDTO mapToDto(Usuario usuario, VehiculoResponseDTO vehiculo);
-
     Usuario buscarUserPorCode(String code);
 
 
