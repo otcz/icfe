@@ -34,6 +34,12 @@ public class Vehiculo extends AuditableEntity implements Serializable {
     @Column(name = "marca", nullable = false)
     private String marca;
 
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @Column(name = "placa", nullable = false)
+    private String placa;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoVehiculo estado;

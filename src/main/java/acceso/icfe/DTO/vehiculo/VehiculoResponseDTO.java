@@ -5,6 +5,8 @@ public record VehiculoResponseDTO(
         String tipo,
         String marca,
         String estado,
+        String color,
+        String placa,
         String nombrePropietario
 ) {
 }

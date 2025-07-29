@@ -30,6 +30,8 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculo.setPropietario(propietario);
         vehiculo.setTipo(dto.tipo());
         vehiculo.setMarca(dto.marca());
+        vehiculo.setColor(dto.color());
+        vehiculo.setPlaca(dto.placa());
         vehiculo.setEstado(dto.estado());
 
         Vehiculo vehiculoSave = vehiculoRepository.save(vehiculo);
@@ -37,6 +39,8 @@ public class VehiculoServiceImpl implements VehiculoService {
                 vehiculoSave.getId(),
                 vehiculoSave.getTipo(),
                 vehiculoSave.getMarca(),
+                vehiculoSave.getColor(),
+                vehiculoSave.getPlaca(),
                 vehiculoSave.getEstado().name(),
                 propietario.getNombres() + " " + propietario.getApellidos()
         );
@@ -53,6 +57,8 @@ public class VehiculoServiceImpl implements VehiculoService {
                 vehiculo.getId(),
                 vehiculo.getTipo(),
                 vehiculo.getMarca(),
+                vehiculo.getColor(),
+                vehiculo.getPlaca(),
                 vehiculo.getEstado().name(),
                 nombrePropietario
         );
@@ -71,6 +77,8 @@ public class VehiculoServiceImpl implements VehiculoService {
                             vehiculo.getId(),
                             vehiculo.getTipo(),
                             vehiculo.getMarca(),
+                            vehiculo.getColor(),
+                            vehiculo.getPlaca(),
                             vehiculo.getEstado().name(),
                             nombrePropietario
                     );
